@@ -16,10 +16,12 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.Pattern;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.data.relational.core.mapping.Table;
 
 @Entity
-@Table
+//@Table
 public class User {
 
 	@Id
@@ -55,12 +57,13 @@ public class User {
     private Boolean status;
     @Column(name = "registrationName", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
 	private LocalDateTime registrationDate; 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "roleId")
     @Column(name = "role", columnDefinition = "role default ROLE_USER")
     private List<Role> role;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL)
     @Column(name = "delegation")
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Delegation> delegation;
     
     public User(){

@@ -1,6 +1,7 @@
 package lab.pai.ui;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,8 +48,8 @@ public class DelegationView extends VerticalLayout{
 
         form = new DelegationForm();
         form.addListener(DelegationForm.SaveEvent.class, this::saveDelegation);
-        //form.addListener(DelegationForm.DeleteEvent.class, this::deleteDelegation);
-        //form.addListener(DelegationForm.ModifyEvent.class, this::modifyDelegation);
+        form.addListener(DelegationForm.DeleteEvent.class, this::deleteDelegation);
+        form.addListener(DelegationForm.ModifyEvent.class, this::modifyDelegation);
         form.addListener(DelegationForm.CloseEvent.class, e -> closeEditor());
 
         grid.setSizeFull();
@@ -82,15 +83,15 @@ public class DelegationView extends VerticalLayout{
         editDelegation(new Delegation());
     }
 
-//    private void deleteDelegation(DelegationForm.DeleteEvent del) {
-//        Date date = java.sql.Date.valueOf(LocalDate.now());
-//        if (del.getDelegation().getDateTimeStart().compareTo(date) > 0){
-//            delegationService.removeDelegation(user.getUserId(), del.getDelegation().getDelegationId());
-//            updateList();
-//            closeEditor();
-//        }
-//
-//    }
+    private void deleteDelegation(DelegationForm.DeleteEvent del) {
+        LocalDateTime date = LocalDateTime.now();
+        if (del.getDelegation().getDateTimeStart().compareTo(date) > 0){
+            delegationService.removeDelegation(user.getUserId(), del.getDelegation().getDelegationId());
+            updateList();
+            closeEditor();
+        }
+
+    }
 
     private void saveDelegation(DelegationForm.SaveEvent del) {
         delegationService.addDelegation(user.getUserId(),del.getDelegation());
@@ -98,14 +99,14 @@ public class DelegationView extends VerticalLayout{
         closeEditor();
     }
 
-//    private void modifyDelegation(DelegationForm.ModifyEvent del){
-//        Date date = java.sql.Date.valueOf(LocalDate.now());
-//        if (del.getDelegation().getDateTimeStart().compareTo(date) > 0){
-//            delegationService.changeDelegation(del.getDelegation().getDelegationId(),del.getDelegation());
-//            updateList();
-//            closeEditor();
-//        }
-//    }
+    private void modifyDelegation(DelegationForm.ModifyEvent del){
+    	LocalDateTime date = LocalDateTime.now();
+        if (del.getDelegation().getDateTimeStart().compareTo(date) > 0){
+            delegationService.changeDelegation(del.getDelegation().getDelegationId(),del.getDelegation());
+            updateList();
+            closeEditor();
+        }
+    }
 
     private void editDelegation(Delegation delegation) {
         if(delegation == null){

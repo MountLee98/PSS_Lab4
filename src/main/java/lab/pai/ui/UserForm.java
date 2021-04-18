@@ -22,7 +22,7 @@ public class UserForm extends FormLayout{
 	 * 
 	 */
 	private static final long serialVersionUID = -4293064709482613662L;
-	private IntegerField iduser = new IntegerField("ID");
+	private IntegerField userId = new IntegerField("ID");
     private PasswordField password = new PasswordField("New Password");
     private TextField name = new TextField("Name");
     private TextField lastName = new TextField("Last Name");
@@ -40,7 +40,7 @@ public class UserForm extends FormLayout{
     BeanValidationBinder<User> binder = new BeanValidationBinder<>(User.class);
 
     public UserForm(){
-        binder.forField(iduser).bind("iduser");
+        binder.forField(userId).bind("userId");
         binder.forField(password).bind("password");
         binder.forField(name).bind("name");
         binder.forField(lastName).bind("lastName");
@@ -50,7 +50,7 @@ public class UserForm extends FormLayout{
         binder.forField(companyNip).bind("companyNip");
         binder.setBean(new User());
 
-        add(iduser,
+        add(userId,
                 companyName,
                 companyAddress,
                 companyNip,

@@ -21,7 +21,7 @@ import lab.pai.service.DelegationService;
 import lab.pai.service.RoleService;
 import lab.pai.service.UserService;
 
-@RequestMapping("/user")
+@RequestMapping("/rest/user")
 @RestController
 @ComponentScan("lab.pai.service")
 public class UserController {
@@ -72,60 +72,6 @@ public class UserController {
 	@GetMapping("/getallbyrolename")
 	List<User> getAllUsersByRoleName(@RequestParam("roleName")String roleName) {
 		return userService.getAllUsersByRoleName(roleName);
-	}
-	
-	
-	
-	@GetMapping("/makebase") 
-	String makeBase() {
-		roleService.addRole(new Role("ROLE_USER"));
-		roleService.addRole(new Role("ROLE_ADMIN"));
-		
-		Role user = new Role();
-		user = roleService.getRoleById(0L);
-		
-		Role admin = new Role();
-		admin = roleService.getRoleById(1L);
-		
-		List<Role> roleUser = new ArrayList<>();
-		List<Role> roleUserAdmin = new ArrayList<>();
-		
-		roleUser.add(user);
-		roleUserAdmin.add(user);
-		roleUserAdmin.add(admin);
-		
-		User p = new User("Piekny", "Piekna 5", "65478654321", "Adam", "Ganczewski", "agan@piekny.com", "Piekna2137");
-		User b = new User("Brzydki", "Brzydka 1", "23453213456", "Marcin", "Zmudlowski", "mzmu@brzydki.com", "Brzydki5643");
-		User j = new User("Jakas", "Jakas 8", "87934567321", "Robert", "Adamowski", "rada@jakas.com", "Jakas9876");
-		
-		p.setRole(roleUser);
-		b.setRole(roleUser);
-		j.setRole(roleUserAdmin);
-		
-		userService.registerUser(p);
-		userService.registerUser(b);
-		userService.registerUser(j);
-		
-		LocalDateTime dataStart = LocalDateTime.now().plusMonths(1);
-        LocalDateTime dataStop = dataStart.plusMonths(3);
-		
-		Delegation p1 = new Delegation(dataStart, dataStop);
-		
-		dataStart = LocalDateTime.now().plusMonths(4);
-        dataStop = dataStart.plusMonths(5);		
-		
-		Delegation p2 = new Delegation(dataStart, dataStop);
-		
-		dataStart = LocalDateTime.now().plusMonths(2);
-        dataStop = dataStart.plusMonths(4);
-        
-        Delegation b1 = new Delegation(dataStart, dataStop);
-		
-		delegationService.addDelegation(p.getUserId(), p1);
-		delegationService.addDelegation(p.getUserId(), p2);
-		delegationService.addDelegation(b.getUserId(), b1);		
-		
-		return "ok";
 	}
 	
 }

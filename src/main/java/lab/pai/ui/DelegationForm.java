@@ -43,7 +43,7 @@ public class DelegationForm extends FormLayout{
     private TextField otherOutlayPrice = new TextField("Other Outlay Price");
     private DatePicker dateTimeStart = new DatePicker("Date Start");
     private DatePicker dateTimeStop= new DatePicker("Date End");
-    private ComboBox<Transport> transport = new ComboBox<>("Transport");
+    private ComboBox<Transport> transportType = new ComboBox<>("Transport");
     private ComboBox<AutoCapacity> autoCapacity = new ComboBox<>("Auto Capacity");
 
     private Button save = new Button("Save");
@@ -67,11 +67,11 @@ public class DelegationForm extends FormLayout{
         binder.forField(otherOutlayPrice).withNullRepresentation("").withConverter(new StringToFloatConverter("Enter a number")).bind(Delegation::getOtherOutlayPrice, Delegation::setOtherOutlayPrice);
         binder.forField(dateTimeStart).withConverter(new LocalDateToDateConverter(ZoneId.systemDefault())).bind("dateTimeStart");
         binder.forField(dateTimeStop).withConverter(new LocalDateToDateConverter(ZoneId.systemDefault())).bind("dateTimeStop");
-        binder.forField(transport).bind(Delegation::getTransportType, Delegation::setTransportType);
+        binder.forField(transportType).bind(Delegation::getTransportType, Delegation::setTransportType);
         binder.forField(autoCapacity).bind(Delegation::getAutoCapacityl, Delegation::setAutoCapacityl);
         binder.setBean(new Delegation());
 
-        transport.setItems(Transport.values());
+        transportType.setItems(Transport.values());
         autoCapacity.setItems(AutoCapacity.values());
 
         addClassName("delegation-form");
@@ -84,7 +84,7 @@ public class DelegationForm extends FormLayout{
                 breakfastNumber,
                 dinnerNumber,
                 supperNumber,
-                transport,
+                transportType,
                 ticketPrice,
                 autoCapacity,
                 km,
